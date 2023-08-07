@@ -1,8 +1,16 @@
 import http from '../utils/http'
 
 const food = {
-  getFood() {
-    return http.get(`/getFood`)
+  findFood(requestBody) {
+    return http.get(`/findFood`, {params: requestBody})
+  },
+
+  findIngredients(requestBody) {
+    return http.get(`/findIngredients`, {params: requestBody})
+  },
+
+  findFoodByIngredients(requestBody) {
+    return http.post(`/findFoodByIngredients`, requestBody)
   },
 }
 

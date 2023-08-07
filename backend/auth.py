@@ -6,12 +6,15 @@ import hashlib
 
 auth = Blueprint('auth', __name__)
 cors = CORS(auth, supports_credentials=True)
-db = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="admin",
-  database="allergy"
-)
+
+def getConnector():
+    db = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="admin",
+        database="allergy"
+    )
+    return db
 
 @cross_origin()
 @auth.route("/login", methods=['POST'])
@@ -27,11 +30,14 @@ def login():
         }
     # MD5加密
     encodedPassword = hashlib.md5(data["password"].encode()).hexdigest()
+    db = getConnector()
     cursor = db.cursor()
     sql = "SELECT * FROM user where email = %s and password = %s"
     val = [data['email'], encodedPassword]
     cursor.execute(sql, val)
     result = cursor.fetchone()
+    cursor.close()
+    db.close()
     if not result:
         return {
             "code": 1,
@@ -58,6 +64,7 @@ def register():
             "error": "Missing information"
         }
     
+    db = getConnector()
     cursor = db.cursor()
     sql = "SELECT * FROM user where email = %s"
     val = [data['email']]
@@ -71,10 +78,12 @@ def register():
     
     # MD5加密
     encodedPassword = hashlib.md5(data["password"].encode()).hexdigest()
-    sql = "INSERT INTO user(email, password) values (%s, %s)"
+    sql = "INSERT INTO user(email, password, role) values (%s, %s, 0)"
     val = (data["email"], encodedPassword)
     cursor.execute(sql, val)
     db.commit()
+    cursor.close()
+    db.close()
     return {
         "code": 0,
         "error": ""
