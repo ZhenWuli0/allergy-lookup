@@ -37,7 +37,7 @@ ssh username@1.1.1.1
 # 下载代码
 在terminal中输入
 ```bash 
-git clone https://github.com/Thinktown-Education/allergy-lookup
+git clone https://github.com/ZhenWuli0/allergy-lookup
 ```
 
 下载完以后可以尝试输入
