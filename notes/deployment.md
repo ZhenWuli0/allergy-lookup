@@ -75,7 +75,7 @@ npm install
 我们要记得把 `frontend/src/utils/common.js` 中的base_url值从原本的`localhost`改成服务器的ip。上课会讲如何使用vi更改文件
 ```js
 -  base_url: process.env.NODE_ENV == "production" ? "http://localhost:5000/api" : "http://localhost:5000/api",
-+  base_url: "http://<your ip address>/api",
++  base_url: "http://<your ip address>:5000/api",
 ```
 这个做法不是很优美，工业化的流程是不需要这么做的
 
