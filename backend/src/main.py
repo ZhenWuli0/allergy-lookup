@@ -17,7 +17,7 @@ def getConnector():
     db = mysql.connector.connect(
         host=hostname,
         user="root",
-        password="admin",
+        password="AQwe123456p",
         database="allergy"
     )
     return db
